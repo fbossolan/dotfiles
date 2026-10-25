@@ -1,0 +1,9 @@
+font-size = 19
+background-opacity = 0.9
+window-width = 130
+window-height = 30
+keybind = global:cmd+ctrl+t=toggle_quick_terminal
+
+# Navigate tabs with Cmd + Option + Left/Right
+keybind = cmd+left=previous_tab
+keybind = cmd+right=next_tab
