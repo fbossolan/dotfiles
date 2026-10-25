@@ -178,6 +178,7 @@ map("v", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 map("v", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 map("v", "<", "<gv", { desc = "Indent left" })
 map("v", ">", ">gv", { desc = "Indent right" })
+map('n', '<leader>r', ':set wrap! linebreak!<CR>', { silent = true, desc = 'Toggle Line Wrap' })
 
 -- windows: C-h/j/k/l to move, <C-w>+ - < > to resize (native)
 map("n", "<C-h>", "<C-w>h", { desc = "Left window" })
