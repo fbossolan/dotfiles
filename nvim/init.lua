@@ -47,7 +47,7 @@ if vim.fn.executable("rg") == 1 then
 end
 
 vim.g.netrw_liststyle = 3
-vim.g.netrw_winsize = 25
+vim.g.netrw_winsize = -25 -- negative = columns (positive = percent)
 
 -- per-filetype indentation
 vim.api.nvim_create_autocmd("FileType", {
@@ -226,6 +226,35 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(0) then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
+  end,
+})
+
+-- netrw: after opening a file with "v" (new split), keep the tree at its width
+vim.api.nvim_create_autocmd("WinNew", {
+  group = augroup,
+  callback = function()
+    vim.schedule(function()
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "netrw" then
+          vim.api.nvim_win_set_width(win, 25)
+        end
+      end
+    end)
+  end,
+})
+
+-- netrw: if the editor window closes and only the tree is left, open an empty one
+-- (otherwise opening a file from the tree fails with E471 "keepj keepalt 2wincmd 1")
+vim.api.nvim_create_autocmd("WinClosed", {
+  group = augroup,
+  callback = function()
+    vim.schedule(function()
+      local wins = vim.api.nvim_list_wins()
+      if #wins == 1 and vim.bo[vim.api.nvim_win_get_buf(wins[1])].filetype == "netrw" then
+        vim.cmd("rightbelow vnew")
+        vim.api.nvim_set_current_win(wins[1]) -- focus stays on the tree
+      end
+    end)
   end,
 })
 
