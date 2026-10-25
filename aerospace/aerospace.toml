@@ -250,9 +250,5 @@ if.app-id = 'com.electron.logseq'
 run = "move-node-to-workspace N"
 
 [[on-window-detected]]
-if.app-id = 'com.meli.agents-hub'
-run = "move-node-to-workspace A"
-
-[[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = "move-node-to-workspace C"
