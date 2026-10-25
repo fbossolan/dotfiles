@@ -108,6 +108,8 @@ local hl = {
   Error        = { fg = p.red },
   StatusLine   = { fg = p.base, bg = p.green },
   StatusLineNC = { fg = p.subtext0, bg = p.surface0 },
+  WinBar       = { fg = p.lavender, bg = "NONE", bold = true },
+  WinBarNC     = { fg = p.overlay1, bg = "NONE" },
   DiagnosticError = { fg = p.red },
   DiagnosticWarn  = { fg = p.yellow },
   DiagnosticInfo  = { fg = p.sky },
@@ -141,6 +143,13 @@ function _G.statusline()
 end
 
 vim.o.statusline = "%{%v:lua.statusline()%}"
+
+-- file name at the top of every split (the tree has none)
+function _G.winbar()
+  if vim.bo.filetype == "netrw" then return "" end
+  return " %f %m"
+end
+vim.o.winbar = "%{%v:lua.winbar()%}"
 
 vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged", "FocusGained" }, {
   callback = refresh_branch,
@@ -253,6 +262,27 @@ vim.api.nvim_create_autocmd("WinClosed", {
       if #wins == 1 and vim.bo[vim.api.nvim_win_get_buf(wins[1])].filetype == "netrw" then
         vim.cmd("rightbelow vnew")
         vim.api.nvim_set_current_win(wins[1]) -- focus stays on the tree
+      end
+    end)
+  end,
+})
+
+-- netrw: "v" leaves the empty window it split from; close empty windows once a real file opens
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  group = augroup,
+  callback = function()
+    vim.schedule(function()
+      -- only when a real file is current (the netrw tree has buftype "" here, so check filetype too)
+      if vim.bo.buftype ~= "" or vim.bo.filetype == "netrw" or vim.api.nvim_buf_get_name(0) == "" then return end
+      local cur = vim.api.nvim_get_current_win()
+      for _, w in ipairs(vim.api.nvim_list_wins()) do
+        local b = vim.api.nvim_win_get_buf(w)
+        local empty = vim.bo[b].buftype == "" and vim.api.nvim_buf_get_name(b) == ""
+          and not vim.bo[b].modified and vim.api.nvim_buf_line_count(b) == 1
+          and vim.api.nvim_buf_get_lines(b, 0, 1, false)[1] == ""
+        if w ~= cur and empty and #vim.api.nvim_list_wins() > 1 then
+          pcall(vim.api.nvim_win_close, w, false)
+        end
       end
     end)
   end,
