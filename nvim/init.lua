@@ -49,6 +49,13 @@ end
 vim.g.netrw_liststyle = 3
 vim.g.netrw_winsize = -25 -- negative = columns (positive = percent)
 
+--yanks the file name of a file when the cursor is in it in netrw
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "netrw",
+  callback = function()
+    vim.keymap.set("n", "yp", 'yiW:let @+ = b:netrw_curdir . "/" . @@<CR>:echo "Copied: " . @+<CR>', { buffer = true, silent = true })
+  end,
+})
 -- per-filetype indentation
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "lua", "python" },
