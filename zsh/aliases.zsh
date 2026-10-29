@@ -31,6 +31,7 @@ alias gcb="git branch | fzf | cut -c 3- | xargs git checkout"
 alias drv='cd "$HOME/Library/CloudStorage/GoogleDrive-flavio.bossolan@mercadolivre.com/Meu Drive"'
 alias rn="ranger"
 alias ghist="git log --oneline --graph --decorate --all"
+alias simple-spec="/Users/buzz/code/simple-spec/simple-spec-init.sh"
 
 # functions
 gpush() {
