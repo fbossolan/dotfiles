@@ -7,3 +7,4 @@ keybind = global:cmd+ctrl+t=toggle_quick_terminal
 # Navigate tabs with Cmd + Option + Left/Right
 keybind = cmd+left=previous_tab
 keybind = cmd+right=next_tab
+window-decoration = none
