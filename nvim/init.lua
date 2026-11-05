@@ -395,7 +395,7 @@ vim.lsp.enable({ "basedpyright", "ruff", "lua_ls" })
 vim.diagnostic.config({
   severity_sort = true,
   float = { border = "rounded", source = "if_many" },
-  virtual_text = { spacing = 2, prefix = "●" },
+  virtual_text = { spacing = 2, grefix = "●" },
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
