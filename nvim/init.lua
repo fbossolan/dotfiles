@@ -48,6 +48,7 @@ end
 
 vim.g.netrw_liststyle = 3
 vim.g.netrw_winsize = -25 -- negative = columns (positive = percent)
+vim.g.netrw_banner = 0
 
 --yanks the file name of a file when the cursor is in it in netrw
 vim.api.nvim_create_autocmd("FileType", {
@@ -56,6 +57,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "yp", 'yiW:let @+ = b:netrw_curdir . "/" . @@<CR>:echo "Copied: " . @+<CR>', { buffer = true, silent = true })
   end,
 })
+
 -- per-filetype indentation
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "lua", "python" },
@@ -69,67 +71,69 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================================================
 -- THEME: Catppuccin Mocha, no plugin. Transparent background (inherits from the terminal).
 -- ============================================================================
-local p = {
-  base = "#1e1e2e", mantle = "#181825", surface0 = "#313244", surface1 = "#45475a",
-  surface2 = "#585b70", overlay0 = "#6c7086", overlay1 = "#7f849c", subtext0 = "#a6adc8",
-  text = "#cdd6f4", rosewater = "#f5e0dc", flamingo = "#f2cdcd", pink = "#f5c2e7",
-  mauve = "#cba6f7", red = "#f38ba8", maroon = "#eba0ac", peach = "#fab387",
-  yellow = "#f9e2af", green = "#a6e3a1", teal = "#94e2d5", sky = "#89dceb",
-  sapphire = "#74c7ec", blue = "#89b4fa", lavender = "#b4befe",
-}
+-- local p = {
+--   base = "#1e1e2e", mantle = "#181825", surface0 = "#313244", surface1 = "#45475a",
+--   surface2 = "#585b70", overlay0 = "#6c7086", overlay1 = "#7f849c", subtext0 = "#a6adc8",
+--   text = "#cdd6f4", rosewater = "#f5e0dc", flamingo = "#f2cdcd", pink = "#f5c2e7",
+--   mauve = "#cba6f7", red = "#f38ba8", maroon = "#eba0ac", peach = "#fab387",
+--   yellow = "#f9e2af", green = "#a6e3a1", teal = "#94e2d5", sky = "#89dceb",
+--   sapphire = "#74c7ec", blue = "#89b4fa", lavender = "#b4befe",
+-- }
 
-vim.cmd("highlight clear")
-vim.g.colors_name = "catppuccin-mocha-min"
+-- vim.cmd("highlight clear")
+-- vim.g.colors_name = "catppuccin-mocha-min"
+--
+-- local hl = {
+--   Normal       = { fg = p.text, bg = "NONE" },
+--   NormalNC     = { bg = "NONE" },
+--   NormalFloat  = { fg = p.text, bg = p.mantle },
+--   FloatBorder  = { fg = p.overlay0, bg = p.mantle },
+--   CursorLine   = { bg = p.mantle },
+--   CursorLineNr = { fg = p.lavender, bold = true },
+--   LineNr       = { fg = p.surface2 },
+--   SignColumn   = { bg = "NONE" },
+--   WinSeparator = { fg = p.surface1 },
+--   Visual       = { bg = p.surface1 },
+--   Search       = { fg = p.base, bg = p.yellow },
+--   IncSearch    = { fg = p.base, bg = p.peach },
+--   MatchParen   = { fg = p.peach, bold = true },
+--   Pmenu        = { fg = p.text, bg = p.mantle },
+--   PmenuSel     = { fg = p.base, bg = p.blue, bold = true },
+--   Folded       = { fg = p.overlay1, bg = p.mantle },
+--   Comment      = { fg = p.overlay0, italic = true },
+--   Constant     = { fg = p.peach },
+--   String       = { fg = p.green },
+--   Number       = { fg = p.peach },
+--   Boolean      = { fg = p.peach },
+--   Identifier   = { fg = p.text },
+--   Function     = { fg = p.blue },
+--   Statement    = { fg = p.mauve },
+--   Keyword      = { fg = p.mauve },
+--   Operator     = { fg = p.sky },
+--   Type         = { fg = p.yellow },
+--   PreProc      = { fg = p.mauve },
+--   Special      = { fg = p.pink },
+--   Delimiter    = { fg = p.subtext0 },
+--   Error        = { fg = p.red },
+--   StatusLine   = { fg = p.base, bg = p.green },
+--   StatusLineNC = { fg = p.subtext0, bg = p.surface0 },
+--   WinBar       = { fg = p.lavender, bg = "NONE", bold = true },
+--   WinBarNC     = { fg = p.overlay1, bg = "NONE" },
+--   DiagnosticError = { fg = p.red },
+--   DiagnosticWarn  = { fg = p.yellow },
+--   DiagnosticInfo  = { fg = p.sky },
+--   DiagnosticHint  = { fg = p.teal },
+--   DiagnosticUnderlineError = { undercurl = true, sp = p.red },
+--   DiagnosticUnderlineWarn  = { undercurl = true, sp = p.yellow },
+--   DiagnosticUnderlineInfo  = { undercurl = true, sp = p.sky },
+--   DiagnosticUnderlineHint  = { undercurl = true, sp = p.teal },
+-- }
+-- for group, opts in pairs(hl) do
+--   vim.api.nvim_set_hl(0, group, opts)
+-- end
 
-local hl = {
-  Normal       = { fg = p.text, bg = "NONE" },
-  NormalNC     = { bg = "NONE" },
-  NormalFloat  = { fg = p.text, bg = p.mantle },
-  FloatBorder  = { fg = p.overlay0, bg = p.mantle },
-  CursorLine   = { bg = p.mantle },
-  CursorLineNr = { fg = p.lavender, bold = true },
-  LineNr       = { fg = p.surface2 },
-  SignColumn   = { bg = "NONE" },
-  WinSeparator = { fg = p.surface1 },
-  Visual       = { bg = p.surface1 },
-  Search       = { fg = p.base, bg = p.yellow },
-  IncSearch    = { fg = p.base, bg = p.peach },
-  MatchParen   = { fg = p.peach, bold = true },
-  Pmenu        = { fg = p.text, bg = p.mantle },
-  PmenuSel     = { fg = p.base, bg = p.blue, bold = true },
-  Folded       = { fg = p.overlay1, bg = p.mantle },
-  Comment      = { fg = p.overlay0, italic = true },
-  Constant     = { fg = p.peach },
-  String       = { fg = p.green },
-  Number       = { fg = p.peach },
-  Boolean      = { fg = p.peach },
-  Identifier   = { fg = p.text },
-  Function     = { fg = p.blue },
-  Statement    = { fg = p.mauve },
-  Keyword      = { fg = p.mauve },
-  Operator     = { fg = p.sky },
-  Type         = { fg = p.yellow },
-  PreProc      = { fg = p.mauve },
-  Special      = { fg = p.pink },
-  Delimiter    = { fg = p.subtext0 },
-  Error        = { fg = p.red },
-  StatusLine   = { fg = p.base, bg = p.green },
-  StatusLineNC = { fg = p.subtext0, bg = p.surface0 },
-  WinBar       = { fg = p.lavender, bg = "NONE", bold = true },
-  WinBarNC     = { fg = p.overlay1, bg = "NONE" },
-  DiagnosticError = { fg = p.red },
-  DiagnosticWarn  = { fg = p.yellow },
-  DiagnosticInfo  = { fg = p.sky },
-  DiagnosticHint  = { fg = p.teal },
-  DiagnosticUnderlineError = { undercurl = true, sp = p.red },
-  DiagnosticUnderlineWarn  = { undercurl = true, sp = p.yellow },
-  DiagnosticUnderlineInfo  = { undercurl = true, sp = p.sky },
-  DiagnosticUnderlineHint  = { undercurl = true, sp = p.teal },
-}
-for group, opts in pairs(hl) do
-  vim.api.nvim_set_hl(0, group, opts)
-end
-
+vim.cmd.colorscheme("catppuccin")
+vim.api.nvim_set_hl(0, "Normal", {bg = "none"})
 -- ============================================================================
 -- STATUSLINE (branch cached: no git call on every redraw)
 -- ============================================================================
