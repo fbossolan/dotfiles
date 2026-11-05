@@ -1,15 +1,14 @@
 # secrets live in ~/.secrets (outside this repo)
 [[ -f ~/.secrets ]] && source ~/.secrets
-# native autosuggestion
-# THE CORE AUTOSUGGESTION (Predictive typing from history)
-autoload -U predict-on
-zle -N predict-on
-zle -N predict-off
-predict-on
 
-# HISTORY PREFIX SEARCH (Type a few letters, hit Up arrow to find matches)
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
+# AUTOSUGGESTIONS: grey ghost text from history
+# install once: brew install zsh-autosuggestions
+# → or End accepts, Ctrl+→ accepts one word, ESC clears the current suggestion
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+ZSH_AUTOSUGGEST_STRATEGY=(history)
+KEYTIMEOUT=1 # ESC is a prefix key; without this it lags before firing
+[[ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^[' autosuggest-clear
 
 # VISUAL MENU COMPLETION (Hit Tab to see an interactive list of options)
 autoload -Uz compinit
