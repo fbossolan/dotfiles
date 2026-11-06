@@ -18,6 +18,7 @@ brew "git"
 brew "gh"
 brew "fzf"              # zshrc: fzf --zsh
 brew "ranger"
+brew "zsh-autosuggestions"
 
 # apps
 cask "aerospace"
