@@ -15,7 +15,6 @@ alias ntc="nvim ~/.tmux.conf"
 alias szc="source ~/.zshrc"
 alias nzc="nvim ~/.zshrc"
 alias ncf="nvim ~/.config/nvim/init.lua"
-alias szc="source ~/.zshrc"
 alias nbp="nvim ~/.bash_profile"
 alias ls="ls -G"      # Colorize ls (use --color on Linux, -G on macOS)
 alias ll="ls -lah"
@@ -28,7 +27,7 @@ echo "OK to merge" || \
 echo "Rebase or merge develop first"'
 
 alias gcb="git branch | fzf | cut -c 3- | xargs git checkout"
-alias drv='cd "$HOME/Library/CloudStorage/GoogleDrive-flavio.bossolan@mercadolivre.com/Meu Drive"'
+alias drv='cd "$HOME/Library/CloudStorage/GoogleDrive-flavio.bossolan@gmail.com/Meu Drive"'
 alias rn="ranger"
 alias ghist="git log --oneline --graph --decorate --all"
 alias simple-spec="/Users/buzz/code/simple-spec/simple-spec-init.sh"
