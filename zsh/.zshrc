@@ -10,10 +10,6 @@ KEYTIMEOUT=1 # ESC is a prefix key; without this it lags before firing
 [[ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^[' autosuggest-clear
 
-# VISUAL MENU COMPLETION (Hit Tab to see an interactive list of options)
-autoload -Uz compinit
-compinit
-zstyle ':completion:*' menu select
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -30,8 +26,6 @@ source ~/.bash_profile
 export HOMEBREW_BIN_LOCATION="/opt/homebrew/bin"
 export PATH="$HOMEBREW_BIN_LOCATION:$PATH"
 
-# split configs: config.zsh (options, prompt, keys) and aliases.zsh
-# ${(%):-%N}:A resolves the ~/.zshrc symlink to the repo folder
-_zdir=${${(%):-%N}:A:h}
-source $_zdir/config.zsh
-source $_zdir/aliases.zsh
+# split configs managed by Stow under ~/.zsh
+source "$HOME/.zsh/config.zsh"
+source "$HOME/.zsh/aliases.zsh"
